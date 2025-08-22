@@ -41,6 +41,13 @@
     @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900;
   }
   
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
   .badge {
     @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
   }
