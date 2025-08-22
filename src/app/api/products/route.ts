@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
       status: body.status,
       vendor: body.vendor,
       description: body.description || '',
-      imageUrl: body.imageUrl || `https://images.unsplash.com/photo-${Math.floor(Math.random() * 1000000)}?w=400&h=400&fit=crop`,
+      imageUrl: body.imageUrl || `https://picsum.photos/400/400?random=${Math.floor(Math.random() * 1000)}`,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

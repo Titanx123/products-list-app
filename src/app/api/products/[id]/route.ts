@@ -8,24 +8,24 @@ export async function GET(
 ) {
   try {
     const { id } = params;
-    
+
     const product = mockProducts.find(p => p.id === id);
-    
+
     if (!product) {
       return NextResponse.json(
         { success: false, message: 'Product not found' },
         { status: 404 }
       );
     }
-    
+
     const response: ApiResponse<Product> = {
       success: true,
       message: 'Product retrieved successfully',
       data: product
     };
-    
+
     return NextResponse.json(response);
-    
+
   } catch (error) {
     console.error('Error fetching product:', error);
     return NextResponse.json(
@@ -42,16 +42,16 @@ export async function PUT(
   try {
     const { id } = params;
     const body = await request.json();
-    
+
     const productIndex = mockProducts.findIndex(p => p.id === id);
-    
+
     if (productIndex === -1) {
       return NextResponse.json(
         { success: false, message: 'Product not found' },
         { status: 404 }
       );
     }
-    
+
     // Validate required fields
     if (!body.name || !body.price || !body.category || !body.status || !body.vendor) {
       return NextResponse.json(
@@ -59,7 +59,7 @@ export async function PUT(
         { status: 400 }
       );
     }
-    
+
     // Validate price and stock quantity
     if (isNaN(body.price) || body.price < 0) {
       return NextResponse.json(
@@ -67,14 +67,14 @@ export async function PUT(
         { status: 400 }
       );
     }
-    
+
     if (body.stockQuantity && (isNaN(body.stockQuantity) || body.stockQuantity < 0)) {
       return NextResponse.json(
         { success: false, message: 'Invalid stock quantity' },
         { status: 400 }
       );
     }
-    
+
     // Update product
     const updatedProduct = {
       ...mockProducts[productIndex],
@@ -86,11 +86,11 @@ export async function PUT(
     
     // Update in mock data
     mockProducts[productIndex] = updatedProduct;
-    
+
     return NextResponse.json(
       { success: true, message: 'Product updated successfully', data: updatedProduct }
     );
-    
+
   } catch (error) {
     console.error('Error updating product:', error);
     return NextResponse.json(
@@ -106,24 +106,24 @@ export async function DELETE(
 ) {
   try {
     const { id } = params;
-    
+
     const productIndex = mockProducts.findIndex(p => p.id === id);
-    
+
     if (productIndex === -1) {
       return NextResponse.json(
         { success: false, message: 'Product not found' },
         { status: 404 }
       );
     }
-    
+
     // Remove from mock data
     const deletedProduct = mockProducts[productIndex];
     mockProducts.splice(productIndex, 1);
-    
+
     return NextResponse.json(
       { success: true, message: 'Product deleted successfully', data: deletedProduct }
     );
-    
+
   } catch (error) {
     console.error('Error deleting product:', error);
     return NextResponse.json(
@@ -131,4 +131,4 @@ export async function DELETE(
       { status: 500 }
     );
   }
-} 
+}

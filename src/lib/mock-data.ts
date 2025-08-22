@@ -27,7 +27,7 @@ const generateMockProducts = (): Product[] => {
       createdAt: createdAt.toISOString(),
       updatedAt: updatedAt.toISOString(),
       description: `This is a ${category.toLowerCase()} product with high quality and great features.`,
-      imageUrl: `https://images.unsplash.com/photo-${Math.floor(Math.random() * 1000000)}?w=400&h=400&fit=crop`
+      imageUrl: `https://picsum.photos/400/400?random=${i}`
     });
   }
   

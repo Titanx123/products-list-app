@@ -8,17 +8,17 @@ import { Search, Filter, ChevronUp, ChevronDown, Eye, Edit, Trash2, Plus, X, Ale
 // Helper function to get category-specific images
 const getCategoryImage = (category: string): string => {
   const categoryImages: Record<string, string> = {
-    'Electronics': 'https://images.unsplash.com/photo-1526738549149-8e07eca6c147?w=400&h=400&fit=crop&auto=format',
-    'Clothing': 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=400&h=400&fit=crop&auto=format',
-    'Home & Garden': 'https://images.unsplash.com/photo-1501183638710-841dd1904471?w=400&h=400&fit=crop&auto=format',
-    'Sports': 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=400&h=400&fit=crop&auto=format',
-    'Books': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&auto=format',
-    'Automotive': 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&h=400&fit=crop&auto=format',
-    'Health & Beauty': 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=400&fit=crop&auto=format',
-    'Toys': 'https://images.unsplash.com/photo-1515619833709-be2e0044cba8?w=400&h=400&fit=crop&auto=format'
+    'Electronics': 'https://picsum.photos/400/400?random=1',
+    'Clothing': 'https://picsum.photos/400/400?random=2',
+    'Home & Garden': 'https://picsum.photos/400/400?random=3',
+    'Sports': 'https://picsum.photos/400/400?random=4',
+    'Books': 'https://picsum.photos/400/400?random=5',
+    'Automotive': 'https://picsum.photos/400/400?random=6',
+    'Health & Beauty': 'https://picsum.photos/400/400?random=7',
+    'Toys': 'https://picsum.photos/400/400?random=8'
   };
   
-  return categoryImages[category] || 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=400&fit=crop&auto=format';
+  return categoryImages[category] || 'https://picsum.photos/400/400?random=9';
 };
 
 export default function ProductsPage() {
@@ -43,9 +43,11 @@ export default function ProductsPage() {
     category: '',
     status: 'active' as const,
     vendor: '',
-    description: ''
+    description: '',
+    imageUrl: ''
   });
   const [addingProduct, setAddingProduct] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   
   // View Product Modal State
   const [showViewModal, setShowViewModal] = useState(false);
@@ -61,9 +63,11 @@ export default function ProductsPage() {
     category: '',
     status: 'active' as 'active' | 'inactive' | 'discontinued',
     vendor: '',
-    description: ''
+    description: '',
+    imageUrl: ''
   });
   const [updatingProduct, setUpdatingProduct] = useState(false);
+  const [uploadingEditImage, setUploadingEditImage] = useState(false);
   
   // Delete Product Modal State
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -124,6 +128,48 @@ export default function ProductsPage() {
     setPagination(prev => ({ ...prev, page }));
   };
   
+  // Handle Image Upload for Add Product
+  const handleImageUpload = async (file: File) => {
+    if (!file) return;
+    
+    try {
+      setUploadingImage(true);
+      
+      // Convert image to base64 for temporary storage
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        setNewProduct(prev => ({ ...prev, imageUrl: result }));
+      };
+      reader.readAsDataURL(file);
+    } catch (error) {
+      alert('Failed to upload image');
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+  
+  // Handle Image Upload for Edit Product
+  const handleEditImageUpload = async (file: File) => {
+    if (!file) return;
+    
+    try {
+      setUploadingEditImage(true);
+      
+      // Convert image to base64 for temporary storage
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        setEditForm(prev => ({ ...prev, imageUrl: result }));
+      };
+      reader.readAsDataURL(file);
+    } catch (error) {
+      alert('Failed to upload image');
+    } finally {
+      setUploadingEditImage(false);
+    }
+  };
+
   // Handle Add Product
   const handleAddProduct = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -144,6 +190,7 @@ export default function ProductsPage() {
           ...newProduct,
           price: parseFloat(newProduct.price),
           stockQuantity: parseInt(newProduct.stockQuantity) || 0,
+          imageUrl: newProduct.imageUrl || getCategoryImage(newProduct.category),
         }),
       });
       
@@ -158,7 +205,8 @@ export default function ProductsPage() {
           category: '',
           status: 'active',
           vendor: '',
-          description: ''
+          description: '',
+          imageUrl: ''
         });
         setShowAddModal(false);
         
@@ -193,7 +241,8 @@ export default function ProductsPage() {
       category: product.category,
       status: product.status,
       vendor: product.vendor,
-      description: product.description || ''
+      description: product.description || '',
+      imageUrl: product.imageUrl || ''
     });
     setShowEditModal(true);
   };
@@ -220,6 +269,7 @@ export default function ProductsPage() {
           ...editForm,
           price: parseFloat(editForm.price),
           stockQuantity: parseInt(editForm.stockQuantity) || 0,
+          imageUrl: editForm.imageUrl || getCategoryImage(editForm.category),
         }),
       });
       
@@ -289,7 +339,8 @@ export default function ProductsPage() {
       category: '',
       status: 'active',
       vendor: '',
-      description: ''
+      description: '',
+      imageUrl: ''
     });
   };
   
@@ -310,7 +361,8 @@ export default function ProductsPage() {
       category: '',
       status: 'active',
       vendor: '',
-      description: ''
+      description: '',
+      imageUrl: ''
     });
   };
   
@@ -754,6 +806,36 @@ export default function ProductsPage() {
                   />
                 </div>
                 
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Product Image
+                  </label>
+                  <div className="flex items-center gap-4">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) handleImageUpload(file);
+                      }}
+                      className="input w-full"
+                      disabled={uploadingImage}
+                    />
+                    {uploadingImage && (
+                      <span className="text-sm text-gray-500">Uploading...</span>
+                    )}
+                  </div>
+                  {newProduct.imageUrl && (
+                    <div className="mt-2">
+                      <img
+                        src={newProduct.imageUrl}
+                        alt="Preview"
+                        className="w-20 h-20 object-cover rounded-lg"
+                      />
+                    </div>
+                  )}
+                </div>
+                
                 <div className="flex gap-3 pt-4">
                   <button
                     type="button"
@@ -973,6 +1055,36 @@ export default function ProductsPage() {
                     rows={3}
                     placeholder="Enter product description"
                   />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Product Image
+                  </label>
+                  <div className="flex items-center gap-4">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) handleEditImageUpload(file);
+                      }}
+                      className="input w-full"
+                      disabled={uploadingEditImage}
+                    />
+                    {uploadingEditImage && (
+                      <span className="text-sm text-gray-500">Uploading...</span>
+                    )}
+                  </div>
+                  {editForm.imageUrl && (
+                    <div className="mt-2">
+                      <img
+                        src={editForm.imageUrl}
+                        alt="Preview"
+                        className="w-20 h-20 object-cover rounded-lg"
+                      />
+                    </div>
+                  )}
                 </div>
                 
                 <div className="flex gap-3 pt-4">
