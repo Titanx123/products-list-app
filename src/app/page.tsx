@@ -512,7 +512,7 @@ export default function ProductsPage() {
                       </div>
                       
                       {/* Product Info */}
-                      <div className="p-4">
+                      <div className="p-4 mt-2">
                         <h3 className="font-medium text-gray-900 mb-1 line-clamp-2">{product.name}</h3>
                         <p className="text-sm text-gray-500 mb-2">UNSPSC: {product.vendor}</p>
                         <p className="text-sm text-gray-600 mb-3 line-clamp-2">Category: {product.category}</p>
@@ -530,7 +530,7 @@ export default function ProductsPage() {
                             onClick={() => handleViewProduct(product)}
                             className="flex-1 bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
                           >
-                            Send Enquiry
+                            View Product
                           </button>
                           <div className="flex gap-1">
                             <button 
