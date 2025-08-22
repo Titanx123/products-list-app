@@ -384,9 +384,9 @@ export default function ProductsPage() {
               </div>
               
               {/* Category Filter */}
-              <div className="mb-6">
-                <h4 className="text-sm font-medium text-gray-700 mb-3">Category</h4>
-                <div className="space-y-2">
+              <div className="mb-8 mt-6">
+                <h4 className="text-sm font-medium text-gray-700 mb-4">Category</h4>
+                <div className="space-y-3">
                   {['All', 'Electronics', 'Clothing', 'Home & Garden', 'Sports', 'Books', 'Automotive', 'Health & Beauty', 'Toys'].map((cat) => (
                     <label key={cat} className="flex items-center">
                       <input
@@ -396,16 +396,16 @@ export default function ProductsPage() {
                         onChange={() => setFilters(prev => ({ ...prev, category: cat === 'All' ? undefined : cat }))}
                         className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
                       />
-                      <span className="ml-2 text-sm text-gray-700">{cat}</span>
+                      <span className="ml-3 text-sm text-gray-700">{cat}</span>
                     </label>
                   ))}
                 </div>
               </div>
               
               {/* Status Filter */}
-              <div className="mb-6">
-                <h4 className="text-sm font-medium text-gray-700 mb-3">Status</h4>
-                <div className="space-y-2">
+              <div className="mb-8">
+                <h4 className="text-sm font-medium text-gray-700 mb-4">Status</h4>
+                <div className="space-y-3">
                   {['All', 'Active', 'Inactive', 'Discontinued'].map((status) => (
                     <label key={status} className="flex items-center">
                       <input
@@ -415,7 +415,7 @@ export default function ProductsPage() {
                         onChange={() => setFilters(prev => ({ ...prev, status: status === 'All' ? undefined : status.toLowerCase() }))}
                         className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
                       />
-                      <span className="ml-2 text-sm text-gray-700">{status}</span>
+                      <span className="ml-3 text-sm text-gray-700">{status}</span>
                     </label>
                   ))}
                 </div>
