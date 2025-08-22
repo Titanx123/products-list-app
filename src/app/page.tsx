@@ -519,10 +519,10 @@ export default function ProductsPage() {
                       
                       {/* Category and Status Badges */}
                       <div className="px-4 pb-2 flex items-center justify-between gap-2">
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 max-w-24 truncate">
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                           {product.category}
                         </span>
-                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(product.status)} max-w-20 truncate`}>
+                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(product.status)}`}>
                           {product.status.charAt(0).toUpperCase() + product.status.slice(1)}
                         </span>
                       </div>
