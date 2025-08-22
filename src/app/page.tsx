@@ -8,17 +8,17 @@ import { Search, Filter, ChevronUp, ChevronDown, Eye, Edit, Trash2, Plus, X, Ale
 // Helper function to get category-specific images
 const getCategoryImage = (category: string): string => {
   const categoryImages: Record<string, string> = {
-    'Electronics': 'https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=300&h=300&fit=crop&auto=format',
-    'Clothing': 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=300&h=300&fit=crop&auto=format',
-    'Home & Garden': 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&h=300&fit=crop&auto=format',
-    'Sports': 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=300&fit=crop&auto=format',
-    'Books': 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=300&h=300&fit=crop&auto=format',
-    'Automotive': 'https://images.unsplash.com/photo-1494976688153-018c7ac5e782?w=300&h=300&fit=crop&auto=format',
-    'Health & Beauty': 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=300&h=300&fit=crop&auto=format',
-    'Toys': 'https://images.unsplash.com/photo-1558877385-09004122c92d?w=300&h=300&fit=crop&auto=format'
+    'Electronics': 'https://images.unsplash.com/photo-1526738549149-8e07eca6c147?w=400&h=400&fit=crop&auto=format',
+    'Clothing': 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=400&h=400&fit=crop&auto=format',
+    'Home & Garden': 'https://images.unsplash.com/photo-1501183638710-841dd1904471?w=400&h=400&fit=crop&auto=format',
+    'Sports': 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=400&h=400&fit=crop&auto=format',
+    'Books': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&auto=format',
+    'Automotive': 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&h=400&fit=crop&auto=format',
+    'Health & Beauty': 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=400&fit=crop&auto=format',
+    'Toys': 'https://images.unsplash.com/photo-1515619833709-be2e0044cba8?w=400&h=400&fit=crop&auto=format'
   };
   
-  return categoryImages[category] || 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=300&h=300&fit=crop&auto=format';
+  return categoryImages[category] || 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=400&fit=crop&auto=format';
 };
 
 export default function ProductsPage() {
