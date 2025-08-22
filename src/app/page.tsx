@@ -499,13 +499,13 @@ export default function ProductsPage() {
                           alt={product.name}
                           className="w-full h-full object-cover rounded-lg bg-gray-50"
                         />
-                        <div className="absolute top-2 right-2">
-                          <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(product.status)}`}>
+                        <div className="absolute top-2 right-2 max-w-[calc(100%-1rem)]">
+                          <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(product.status)} truncate`}>
                             {product.status.charAt(0).toUpperCase() + product.status.slice(1)}
                           </span>
                         </div>
-                        <div className="absolute top-2 left-2">
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        <div className="absolute top-2 left-2 max-w-[calc(50%-0.75rem)]">
+                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 truncate">
                             {product.category}
                           </span>
                         </div>
