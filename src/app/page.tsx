@@ -582,7 +582,7 @@ export default function ProductsPage() {
                       {/* Product Info */}
                       <div className="p-4 pt-0">
                         <h3 className="font-medium text-gray-900 mb-1 line-clamp-2">{product.name}</h3>
-                        <p className="text-sm text-gray-500 mb-2">UNSPSC: {product.vendor}</p>
+                        <p className="text-sm text-gray-500 mb-2">VENDOR: {product.vendor}</p>
                         <p className="text-sm text-gray-600 mb-3 line-clamp-2">Category: {product.category}</p>
                         
                         <div className="flex items-center justify-between mb-4">
