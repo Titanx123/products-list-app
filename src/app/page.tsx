@@ -5,6 +5,22 @@ import { Product, ProductFilters, ProductSort, PaginationParams } from '@/types'
 import { formatPrice, formatDate, getStatusColor, getStockColor, formatDateTime } from '@/lib/utils';
 import { Search, Filter, ChevronUp, ChevronDown, Eye, Edit, Trash2, Plus, X, AlertTriangle } from 'lucide-react';
 
+// Helper function to get category-specific images
+const getCategoryImage = (category: string): string => {
+  const categoryImages: Record<string, string> = {
+    'Electronics': 'https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=300&h=300&fit=crop&auto=format',
+    'Clothing': 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=300&h=300&fit=crop&auto=format',
+    'Home & Garden': 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&h=300&fit=crop&auto=format',
+    'Sports': 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=300&fit=crop&auto=format',
+    'Books': 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=300&h=300&fit=crop&auto=format',
+    'Automotive': 'https://images.unsplash.com/photo-1494976688153-018c7ac5e782?w=300&h=300&fit=crop&auto=format',
+    'Health & Beauty': 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=300&h=300&fit=crop&auto=format',
+    'Toys': 'https://images.unsplash.com/photo-1558877385-09004122c92d?w=300&h=300&fit=crop&auto=format'
+  };
+  
+  return categoryImages[category] || 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=300&h=300&fit=crop&auto=format';
+};
+
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -493,26 +509,26 @@ export default function ProductsPage() {
                   {products.map((product) => (
                     <div key={product.id} className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow group">
                       {/* Product Image */}
-                      <div className="relative aspect-square p-4">
+                      <div className="aspect-square p-4">
                         <img
-                          src={product.imageUrl || `https://images.unsplash.com/photo-${Math.floor(Math.random() * 1000000)}?w=300&h=300&fit=crop`}
+                          src={product.imageUrl || getCategoryImage(product.category)}
                           alt={product.name}
                           className="w-full h-full object-cover rounded-lg bg-gray-50"
                         />
-                        <div className="absolute top-6 right-6">
-                          <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(product.status)} max-w-20 truncate`}>
-                            {product.status.charAt(0).toUpperCase() + product.status.slice(1)}
-                          </span>
-                        </div>
-                        <div className="absolute top-6 left-6">
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 max-w-16 truncate">
-                            {product.category}
-                          </span>
-                        </div>
+                      </div>
+                      
+                      {/* Category and Status Badges */}
+                      <div className="px-4 pb-2 flex items-center justify-between gap-2">
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 max-w-24 truncate">
+                          {product.category}
+                        </span>
+                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(product.status)} max-w-20 truncate`}>
+                          {product.status.charAt(0).toUpperCase() + product.status.slice(1)}
+                        </span>
                       </div>
                       
                       {/* Product Info */}
-                      <div className="p-4 pt-2">
+                      <div className="p-4 pt-0">
                         <h3 className="font-medium text-gray-900 mb-1 line-clamp-2">{product.name}</h3>
                         <p className="text-sm text-gray-500 mb-2">UNSPSC: {product.vendor}</p>
                         <p className="text-sm text-gray-600 mb-3 line-clamp-2">Category: {product.category}</p>
@@ -778,7 +794,7 @@ export default function ProductsPage() {
               <div className="space-y-4">
                 <div className="flex justify-center">
                   <img
-                    src={selectedProduct.imageUrl || `https://images.unsplash.com/photo-${Math.floor(Math.random() * 1000000)}?w=200&h=200&fit=crop`}
+                    src={selectedProduct.imageUrl || getCategoryImage(selectedProduct.category)}
                     alt={selectedProduct.name}
                     className="w-32 h-32 rounded-lg object-cover"
                   />
