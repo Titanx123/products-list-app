@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { mockProducts } from '@/lib/mock-data';
 import { Product, ProductFilters, ProductSort, PaginationParams } from '@/types';
 import { formatPrice, formatDate, getStatusColor, getStockColor, formatDateTime } from '@/lib/utils';
 import { Search, Filter, ChevronUp, ChevronDown, Eye, Edit, Trash2, Plus, X, AlertTriangle } from 'lucide-react';
