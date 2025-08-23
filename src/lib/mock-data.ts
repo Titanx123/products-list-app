@@ -74,19 +74,19 @@ export const generateStatuses = (): Status[] => {
 // Filter and sort products
 export const filterAndSortProducts = (
   products: Product[],
-  filters: { category?: string; status?: string; search?: string },
+  filters: { categories?: string[]; statuses?: string[]; search?: string },
   sort: { sortBy: string; sortOrder: 'asc' | 'desc' },
   pagination: { page: number; limit: number }
 ) => {
   let filtered = [...products];
   
   // Apply filters
-  if (filters.category) {
-    filtered = filtered.filter(product => product.category === filters.category);
+  if (filters.categories && filters.categories.length > 0) {
+    filtered = filtered.filter(product => filters.categories!.includes(product.category));
   }
   
-  if (filters.status) {
-    filtered = filtered.filter(product => product.status === filters.status);
+  if (filters.statuses && filters.statuses.length > 0) {
+    filtered = filtered.filter(product => filters.statuses!.includes(product.status));
   }
   
   if (filters.search) {

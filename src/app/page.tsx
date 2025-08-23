@@ -29,7 +29,10 @@ export default function ProductsPage() {
   const [totalPages, setTotalPages] = useState(0);
   
   // State for filters, sorting, and pagination
-  const [filters, setFilters] = useState<ProductFilters>({});
+  const [filters, setFilters] = useState<ProductFilters>({
+    categories: [],
+    statuses: []
+  });
   const [sort, setSort] = useState<ProductSort>({ sortBy: 'createdAt', sortOrder: 'desc' });
   const [pagination, setPagination] = useState<PaginationParams>({ page: 1, limit: 8 });
   const [searchTerm, setSearchTerm] = useState('');
@@ -83,8 +86,8 @@ export default function ProductsPage() {
         limit: pagination.limit.toString(),
         sortBy: sort.sortBy,
         sortOrder: sort.sortOrder,
-        ...(filters.category && { category: filters.category }),
-        ...(filters.status && { status: filters.status }),
+        ...(filters.categories && filters.categories.length > 0 && { categories: filters.categories.join(',') }),
+        ...(filters.statuses && filters.statuses.length > 0 && { statuses: filters.statuses.join(',') }),
         ...(searchTerm && { search: searchTerm }),
       });
       
@@ -126,6 +129,28 @@ export default function ProductsPage() {
   // Handle pagination
   const handlePageChange = (page: number) => {
     setPagination(prev => ({ ...prev, page }));
+  };
+  
+  // Handle category filter change
+  const handleCategoryChange = (category: string, checked: boolean) => {
+    setFilters(prev => ({
+      ...prev,
+      categories: checked 
+        ? [...(prev.categories || []), category]
+        : (prev.categories || []).filter(c => c !== category)
+    }));
+    setPagination(prev => ({ ...prev, page: 1 }));
+  };
+  
+  // Handle status filter change
+  const handleStatusChange = (status: string, checked: boolean) => {
+    setFilters(prev => ({
+      ...prev,
+      statuses: checked 
+        ? [...(prev.statuses || []), status]
+        : (prev.statuses || []).filter(s => s !== status)
+    }));
+    setPagination(prev => ({ ...prev, page: 1 }));
   };
   
   // Handle Image Upload for Add Product
@@ -425,7 +450,7 @@ export default function ProductsPage() {
                 <h3 className="text-lg font-medium text-gray-900">Filters</h3>
                 <button 
                   onClick={() => {
-                    setFilters({});
+                    setFilters({ categories: [], statuses: [] });
                     setSearchTerm('');
                   }}
                   className="text-sm text-blue-600 hover:text-blue-800"
@@ -455,14 +480,13 @@ export default function ProductsPage() {
               <div className="mb-8 mt-6">
                 <h4 className="text-sm font-medium text-gray-700 mb-4">Category</h4>
                 <div className="space-y-3">
-                  {['All', 'Electronics', 'Clothing', 'Home & Garden', 'Sports', 'Books', 'Automotive', 'Health & Beauty', 'Toys'].map((cat) => (
+                  {['Electronics', 'Clothing', 'Home & Garden', 'Sports', 'Books', 'Automotive', 'Health & Beauty', 'Toys'].map((cat) => (
                     <label key={cat} className="flex items-center">
                       <input
-                        type="radio"
-                        name="category"
-                        checked={cat === 'All' ? !filters.category : filters.category === cat}
-                        onChange={() => setFilters(prev => ({ ...prev, category: cat === 'All' ? undefined : cat }))}
-                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                        type="checkbox"
+                        checked={filters.categories?.includes(cat) || false}
+                        onChange={(e) => handleCategoryChange(cat, e.target.checked)}
+                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                       />
                       <span className="ml-3 text-sm text-gray-700">{cat}</span>
                     </label>
@@ -474,14 +498,13 @@ export default function ProductsPage() {
               <div className="mb-8">
                 <h4 className="text-sm font-medium text-gray-700 mb-4">Status</h4>
                 <div className="space-y-3">
-                  {['All', 'Active', 'Inactive', 'Discontinued'].map((status) => (
+                  {['Active', 'Inactive', 'Discontinued'].map((status) => (
                     <label key={status} className="flex items-center">
                       <input
-                        type="radio"
-                        name="status"
-                        checked={status === 'All' ? !filters.status : filters.status === status.toLowerCase()}
-                        onChange={() => setFilters(prev => ({ ...prev, status: status === 'All' ? undefined : status.toLowerCase() }))}
-                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                        type="checkbox"
+                        checked={filters.statuses?.includes(status.toLowerCase()) || false}
+                        onChange={(e) => handleStatusChange(status.toLowerCase(), e.target.checked)}
+                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                       />
                       <span className="ml-3 text-sm text-gray-700">{status}</span>
                     </label>
@@ -518,7 +541,10 @@ export default function ProductsPage() {
             {/* Results Header */}
             <div className="flex items-center justify-between mb-4">
               <p className="text-sm text-gray-600">
-                Showing {total} results {searchTerm && `for "${searchTerm}"`}
+                Showing {total} results 
+                {searchTerm && ` for "${searchTerm}"`}
+                {filters.categories && filters.categories.length > 0 && ` in ${filters.categories.join(', ')}`}
+                {filters.statuses && filters.statuses.length > 0 && ` with status: ${filters.statuses.join(', ')}`}
               </p>
               <div className="flex items-center gap-4">
                 <span className="text-sm text-gray-600">Items per page:</span>

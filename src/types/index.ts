@@ -13,8 +13,8 @@ export interface Product {
 }
 
 export interface ProductFilters {
-  category?: string;
-  status?: string;
+  categories?: string[];
+  statuses?: string[];
   search?: string;
 }
 

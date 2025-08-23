@@ -11,8 +11,8 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '10');
     const sortBy = searchParams.get('sortBy') || 'createdAt';
     const sortOrder = (searchParams.get('sortOrder') || 'desc') as 'asc' | 'desc';
-    const category = searchParams.get('category') || undefined;
-    const status = searchParams.get('status') || undefined;
+    const categories = searchParams.get('categories')?.split(',') || undefined;
+    const statuses = searchParams.get('statuses')?.split(',') || undefined;
     const search = searchParams.get('search') || undefined;
     
     // Validate parameters
@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
     // Filter and sort products
     const result = filterAndSortProducts(
       mockProducts,
-      { category, status, search },
+      { categories, statuses, search },
       { sortBy, sortOrder },
       { page, limit }
     );
