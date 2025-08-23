@@ -431,38 +431,38 @@ export default function ProductsPage() {
                 Manage your product inventory with ease
               </p>
             </div>
-            <div className="flex items-center gap-3 w-full sm:w-auto">
-              {/* Mobile Search Bar */}
-              <div className="flex-1 sm:hidden">
+            <div className="flex items-center gap-2 w-full sm:w-auto mobile-header-layout">
+              {/* Mobile Filter Button - First (Left) */}
+              <button 
+                onClick={() => setShowMobileFilters(true)}
+                className="sm:hidden bg-gray-100 text-gray-700 w-11 h-11 rounded-md hover:bg-gray-200 flex items-center justify-center transition-colors flex-shrink-0 mobile-filter-btn"
+                title="Filters"
+              >
+                <Filter className="w-5 h-5" />
+              </button>
+              
+              {/* Mobile Search Bar - Second (Center) */}
+              <div className="flex-1 sm:hidden mobile-search-container">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                   <input
                     type="text"
-                    placeholder="Search products..."
+                    placeholder="Search..."
                     value={searchTerm}
                     onChange={(e) => handleSearch(e.target.value)}
-                    className="input pl-10 w-full"
+                    className="input pl-10 w-full mobile-search-input"
                   />
                 </div>
               </div>
               
-              {/* Mobile Filter Button */}
-              <button 
-                onClick={() => setShowMobileFilters(true)}
-                className="sm:hidden bg-gray-100 text-gray-700 px-3 py-2 rounded-md hover:bg-gray-200 flex items-center gap-2 transition-colors"
-              >
-                <Filter className="w-4 h-4" />
-                Filters
-              </button>
-              
-              {/* Add Product Button */}
+              {/* Add Product Button - Third (Right) */}
               <button 
                 onClick={() => setShowAddModal(true)}
-                className="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 flex items-center gap-2 transition-colors whitespace-nowrap"
+                className="bg-blue-600 text-white w-11 h-11 sm:px-4 sm:py-2 sm:w-auto sm:h-auto rounded-md hover:bg-blue-700 flex items-center justify-center sm:gap-2 transition-colors flex-shrink-0 mobile-add-btn"
+                title="Add Product"
               >
-                <Plus className="w-4 h-4" />
+                <Plus className="w-5 h-5 sm:w-4 sm:h-4" />
                 <span className="hidden sm:inline">Add Product</span>
-                <span className="sm:hidden">Add</span>
               </button>
             </div>
           </div>
@@ -577,7 +577,7 @@ export default function ProductsPage() {
                 {filters.categories && filters.categories.length > 0 && ` in ${filters.categories.join(', ')}`}
                 {filters.statuses && filters.statuses.length > 0 && ` with status: ${filters.statuses.join(', ')}`}
               </p>
-              <div className="flex items-center gap-4 order-1 sm:order-2 w-full sm:w-auto justify-between sm:justify-end">
+              <div className="flex items-center gap-2 sm:gap-4 order-1 sm:order-2 w-full sm:w-auto justify-between sm:justify-end">
                 {/* Desktop Search - Hidden on mobile */}
                 <div className="hidden sm:block">
                   <div className="relative">
@@ -592,23 +592,25 @@ export default function ProductsPage() {
                   </div>
                 </div>
                 
-                <span className="text-sm text-gray-600">Items per page:</span>
-                <select
-                  value={pagination.limit}
-                  onChange={(e) => setPagination(prev => ({ ...prev, limit: parseInt(e.target.value), page: 1 }))}
-                  className="input text-sm"
-                >
-                  <option value="8">8</option>
-                  <option value="12">12</option>
-                  <option value="16">16</option>
-                  <option value="24">24</option>
-                </select>
+                <div className="flex items-center gap-1 sm:gap-2 items-per-page-container">
+                  <span className="text-xs sm:text-sm text-gray-600 whitespace-nowrap">Items:</span>
+                  <select
+                    value={pagination.limit}
+                    onChange={(e) => setPagination(prev => ({ ...prev, limit: parseInt(e.target.value), page: 1 }))}
+                    className="input text-xs sm:text-sm w-20 sm:w-24 items-per-page-select"
+                  >
+                    <option value="8">8</option>
+                    <option value="12">12</option>
+                    <option value="16">16</option>
+                    <option value="24">24</option>
+                  </select>
+                </div>
               </div>
             </div>
             
             {loading ? (
               // Loading skeleton
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 mobile-card-grid">
                 {Array.from({ length: pagination.limit }).map((_, i) => (
                   <div key={i} className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 animate-pulse">
                     <div className="aspect-square bg-gray-200 rounded-lg mb-4"></div>
@@ -628,7 +630,7 @@ export default function ProductsPage() {
             ) : (
               <>
                 {/* Products Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 mobile-card-grid">
                   {products.map((product) => (
                     <div key={product.id} className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow group">
                       {/* Product Image */}
