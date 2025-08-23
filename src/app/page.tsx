@@ -397,6 +397,9 @@ export default function ProductsPage() {
     setDeletingProduct(null);
   };
   
+  // Mobile filter modal state
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
+  
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -420,20 +423,47 @@ export default function ProductsPage() {
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center py-6 gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Products Dashboard</h1>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Products Dashboard</h1>
               <p className="mt-1 text-sm text-gray-500">
                 Manage your product inventory with ease
               </p>
             </div>
-            <button 
-              onClick={() => setShowAddModal(true)}
-              className="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 flex items-center gap-2 transition-colors"
-            >
-              <Plus className="w-4 h-4" />
-              Add Product
-            </button>
+            <div className="flex items-center gap-3 w-full sm:w-auto">
+              {/* Mobile Search Bar */}
+              <div className="flex-1 sm:hidden">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    value={searchTerm}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    className="input pl-10 w-full"
+                  />
+                </div>
+              </div>
+              
+              {/* Mobile Filter Button */}
+              <button 
+                onClick={() => setShowMobileFilters(true)}
+                className="sm:hidden bg-gray-100 text-gray-700 px-3 py-2 rounded-md hover:bg-gray-200 flex items-center gap-2 transition-colors"
+              >
+                <Filter className="w-4 h-4" />
+                Filters
+              </button>
+              
+              {/* Add Product Button */}
+              <button 
+                onClick={() => setShowAddModal(true)}
+                className="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 flex items-center gap-2 transition-colors whitespace-nowrap"
+              >
+                <Plus className="w-4 h-4" />
+                <span className="hidden sm:inline">Add Product</span>
+                <span className="sm:hidden">Add</span>
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -444,7 +474,7 @@ export default function ProductsPage() {
         
         <div className="flex gap-6">
           {/* Filters Sidebar */}
-          <div className="w-64 flex-shrink-0">
+          <div className="hidden lg:block w-64 flex-shrink-0">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-medium text-gray-900">Filters</h3>
@@ -537,16 +567,30 @@ export default function ProductsPage() {
           </div>
           
           {/* Products Grid */}
-          <div className="flex-1">
+          <div className="flex-1 lg:ml-0">
             {/* Results Header */}
-            <div className="flex items-center justify-between mb-4">
-              <p className="text-sm text-gray-600">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-3">
+              <p className="text-sm text-gray-600 order-2 sm:order-1">
                 Showing {total} results 
                 {searchTerm && ` for "${searchTerm}"`}
                 {filters.categories && filters.categories.length > 0 && ` in ${filters.categories.join(', ')}`}
                 {filters.statuses && filters.statuses.length > 0 && ` with status: ${filters.statuses.join(', ')}`}
               </p>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 order-1 sm:order-2 w-full sm:w-auto justify-between sm:justify-end">
+                {/* Desktop Search - Hidden on mobile */}
+                <div className="hidden sm:block">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <input
+                      type="text"
+                      placeholder="Search products..."
+                      value={searchTerm}
+                      onChange={(e) => handleSearch(e.target.value)}
+                      className="input pl-10 w-64"
+                    />
+                  </div>
+                </div>
+                
                 <span className="text-sm text-gray-600">Items per page:</span>
                 <select
                   value={pagination.limit}
@@ -583,7 +627,7 @@ export default function ProductsPage() {
             ) : (
               <>
                 {/* Products Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                   {products.map((product) => (
                     <div key={product.id} className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow group">
                       {/* Product Image */}
@@ -606,14 +650,14 @@ export default function ProductsPage() {
                       </div>
                       
                       {/* Product Info */}
-                      <div className="p-4 pt-0">
+                      <div className="p-3 sm:p-4 pt-0">
                         <h3 className="font-medium text-gray-900 mb-1 line-clamp-2">{product.name}</h3>
-                        <p className="text-sm text-gray-500 mb-2">VENDOR: {product.vendor}</p>
-                        <p className="text-sm text-gray-600 mb-3 line-clamp-2">Category: {product.category}</p>
+                        <p className="text-xs sm:text-sm text-gray-500 mb-2">VENDOR: {product.vendor}</p>
+                        <p className="text-xs sm:text-sm text-gray-600 mb-3 line-clamp-2">Category: {product.category}</p>
                         
                         <div className="flex items-center justify-between mb-4">
-                          <span className="text-lg font-bold text-gray-900">{formatPrice(product.price)}</span>
-                          <span className={`text-sm font-medium ${getStockColor(product.stockQuantity)}`}>
+                          <span className="text-base sm:text-lg font-bold text-gray-900">{formatPrice(product.price)}</span>
+                          <span className={`text-xs sm:text-sm font-medium ${getStockColor(product.stockQuantity)}`}>
                             Stock: {product.stockQuantity}
                           </span>
                         </div>
@@ -622,9 +666,10 @@ export default function ProductsPage() {
                         <div className="flex gap-2">
                           <button
                             onClick={() => handleViewProduct(product)}
-                            className="flex-1 bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
+                            className="flex-1 bg-blue-600 text-white px-2 sm:px-3 py-2 rounded-md text-xs sm:text-sm font-medium hover:bg-blue-700 transition-colors"
                           >
-                            View Product
+                            <span className="hidden sm:inline">View Product</span>
+                            <span className="sm:hidden">View</span>
                           </button>
                           <div className="flex gap-1">
                             <button 
@@ -707,10 +752,134 @@ export default function ProductsPage() {
         </div>
       </main>
       
+      {/* Mobile Filters Modal */}
+      {showMobileFilters && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 z-50 lg:hidden">
+          <div className="fixed inset-y-0 right-0 max-w-xs w-full bg-white shadow-xl">
+            <div className="flex flex-col h-full">
+              {/* Header */}
+              <div className="flex items-center justify-between p-4 border-b border-gray-200">
+                <h3 className="text-lg font-medium text-gray-900">Filters</h3>
+                <button
+                  onClick={() => setShowMobileFilters(false)}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+              
+              {/* Filters Content */}
+              <div className="flex-1 overflow-y-auto p-4">
+                <div className="space-y-6">
+                  {/* Clear All Button */}
+                  <button 
+                    onClick={() => {
+                      setFilters({ categories: [], statuses: [] });
+                      setSearchTerm('');
+                    }}
+                    className="w-full text-sm text-blue-600 hover:text-blue-800 text-center py-2 border border-blue-200 rounded-md hover:bg-blue-50"
+                  >
+                    Clear All Filters
+                  </button>
+                  
+                  {/* Category Filter */}
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-900 mb-4 flex items-center justify-between">
+                      Category
+                      <span className="text-xs text-gray-500">
+                        {filters.categories?.length || 0} selected
+                      </span>
+                    </h4>
+                    <div className="space-y-3 max-h-48 overflow-y-auto">
+                      {['Electronics', 'Clothing', 'Home & Garden', 'Sports', 'Books', 'Automotive', 'Health & Beauty', 'Toys'].map((cat) => (
+                        <label key={cat} className="flex items-center justify-between py-2">
+                          <div className="flex items-center">
+                            <input
+                              type="checkbox"
+                              checked={filters.categories?.includes(cat) || false}
+                              onChange={(e) => handleCategoryChange(cat, e.target.checked)}
+                              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                            />
+                            <span className="ml-3 text-sm text-gray-700">{cat}</span>
+                          </div>
+                          <span className="text-xs text-gray-400">
+                            ({mockProducts.filter(p => p.category === cat).length})
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Status Filter */}
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-900 mb-4 flex items-center justify-between">
+                      Status
+                      <span className="text-xs text-gray-500">
+                        {filters.statuses?.length || 0} selected
+                      </span>
+                    </h4>
+                    <div className="space-y-3">
+                      {['Active', 'Inactive', 'Discontinued'].map((status) => (
+                        <label key={status} className="flex items-center justify-between py-2">
+                          <div className="flex items-center">
+                            <input
+                              type="checkbox"
+                              checked={filters.statuses?.includes(status.toLowerCase()) || false}
+                              onChange={(e) => handleStatusChange(status.toLowerCase(), e.target.checked)}
+                              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                            />
+                            <span className="ml-3 text-sm text-gray-700">{status}</span>
+                          </div>
+                          <span className="text-xs text-gray-400">
+                            ({mockProducts.filter(p => p.status === status.toLowerCase()).length})
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Sort Options */}
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-900 mb-4">Sort By</h4>
+                    <select
+                      value={`${sort.sortBy}-${sort.sortOrder}`}
+                      onChange={(e) => {
+                        const [sortBy, sortOrder] = e.target.value.split('-');
+                        setSort({ sortBy: sortBy as any, sortOrder: sortOrder as 'asc' | 'desc' });
+                      }}
+                      className="input w-full text-sm"
+                    >
+                      <option value="createdAt-desc">Newest First</option>
+                      <option value="createdAt-asc">Oldest First</option>
+                      <option value="name-asc">Name A-Z</option>
+                      <option value="name-desc">Name Z-A</option>
+                      <option value="price-asc">Price Low to High</option>
+                      <option value="price-desc">Price High to Low</option>
+                      <option value="stockQuantity-asc">Stock Low to High</option>
+                      <option value="stockQuantity-desc">Stock High to Low</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Footer */}
+              <div className="p-4 border-t border-gray-200">
+                <button
+                  onClick={() => setShowMobileFilters(false)}
+                  className="w-full bg-primary-600 text-white px-4 py-3 rounded-md hover:bg-primary-700 transition-colors font-medium"
+                >
+                  Apply Filters
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
       {/* Add Product Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 p-4">
+          <div className="relative top-4 sm:top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
             <div className="mt-3">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-medium text-gray-900">Add New Product</h3>
@@ -886,8 +1055,8 @@ export default function ProductsPage() {
       
       {/* View Product Modal */}
       {showViewModal && selectedProduct && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 p-4">
+          <div className="relative top-4 sm:top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
             <div className="mt-3">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-medium text-gray-900">Product Details</h3>
@@ -960,8 +1129,8 @@ export default function ProductsPage() {
       
       {/* Edit Product Modal */}
       {showEditModal && editingProduct && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 p-4">
+          <div className="relative top-4 sm:top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
             <div className="mt-3">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-medium text-gray-900">Edit Product</h3>
@@ -1137,8 +1306,8 @@ export default function ProductsPage() {
       
       {/* Delete Product Modal */}
       {showDeleteModal && deletingProduct && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 p-4">
+          <div className="relative top-4 sm:top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
             <div className="mt-3 text-center">
               <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
                 <AlertTriangle className="h-6 w-6 text-red-600" />
