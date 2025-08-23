@@ -664,7 +664,7 @@ export default function ProductsPage() {
                         </div>
                         
                         {/* Action Buttons */}
-                        <div className="flex gap-2">
+                        <div className="modal-buttons flex gap-3">
                           <button
                             onClick={() => handleViewProduct(product)}
                             className="flex-1 bg-blue-600 text-white px-2 sm:px-3 py-2 rounded-md text-xs sm:text-sm font-medium hover:bg-blue-700 transition-colors"
@@ -755,8 +755,8 @@ export default function ProductsPage() {
       
       {/* Mobile Filters Modal */}
       {showMobileFilters && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 z-50 lg:hidden">
-          <div className="fixed inset-y-0 right-0 max-w-xs w-full bg-white shadow-xl">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="bg-white rounded-lg shadow-xl w-[90vw] max-w-sm max-h-[90vh] overflow-y-auto">
             <div className="flex flex-col h-full">
               {/* Header */}
               <div className="flex items-center justify-between p-4 border-b border-gray-200">
@@ -879,8 +879,8 @@ export default function ProductsPage() {
       
       {/* Add Product Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 p-4">
-          <div className="relative top-4 sm:top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg shadow-xl w-[90vw] max-w-md max-h-[90vh] overflow-y-auto p-6">
             <div className="mt-3">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-medium text-gray-900">Add New Product</h3>
@@ -892,7 +892,7 @@ export default function ProductsPage() {
                 </button>
               </div>
               
-              <form onSubmit={handleAddProduct} className="space-y-4">
+              <form onSubmit={handleAddProduct} className="modal-form-spacing space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Product Name *
@@ -1056,8 +1056,8 @@ export default function ProductsPage() {
       
       {/* View Product Modal */}
       {showViewModal && selectedProduct && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 p-4">
-          <div className="relative top-4 sm:top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg shadow-xl w-[90vw] max-w-md max-h-[90vh] overflow-y-auto p-6">
             <div className="mt-3">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-medium text-gray-900">Product Details</h3>
@@ -1130,8 +1130,8 @@ export default function ProductsPage() {
       
       {/* Edit Product Modal */}
       {showEditModal && editingProduct && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 p-4">
-          <div className="relative top-4 sm:top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg shadow-xl w-[90vw] max-w-md max-h-[90vh] overflow-y-auto p-6">
             <div className="mt-3">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-medium text-gray-900">Edit Product</h3>
@@ -1307,8 +1307,8 @@ export default function ProductsPage() {
       
       {/* Delete Product Modal */}
       {showDeleteModal && deletingProduct && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 p-4">
-          <div className="relative top-4 sm:top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg shadow-xl w-[90vw] max-w-sm max-h-[90vh] overflow-y-auto p-6">
             <div className="mt-3 text-center">
               <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
                 <AlertTriangle className="h-6 w-6 text-red-600" />

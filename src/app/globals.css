@@ -78,4 +78,105 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+}
+
+/* Desktop popup styling improvements */
+.modal-content {
+  padding: 1.5rem !important;
+}
+
+.modal-form-spacing > * + * {
+  margin-top: 1rem !important;
+}
+
+.modal-form-spacing .form-group {
+  margin-bottom: 1.25rem !important;
+}
+
+.modal-buttons {
+  margin-top: 2rem !important;
+  gap: 0.75rem !important;
+}
+
+/* Mobile-only styles (max-width: 767px) */
+@media (max-width: 767px) {
+  /* Mobile popup padding override */
+  .modal-content {
+    padding: 1rem !important;
+  }
+  
+  /* Mobile Header Layout - Override default layout */
+  .flex.items-center.gap-3.w-full.sm\\:w-auto {
+    gap: 0.5rem !important;
+  }
+  
+  /* Mobile Filter Button - Hide text, show only icon, make touch-friendly */
+  .sm\\:hidden.bg-gray-100.text-gray-700.px-3.py-2.rounded-md.hover\\:bg-gray-200.flex.items-center.gap-2.transition-colors {
+    width: 2.75rem !important;
+    height: 2.75rem !important;
+    padding: 0 !important;
+    justify-content: center !important;
+  }
+  
+  .sm\\:hidden.bg-gray-100.text-gray-700.px-3.py-2.rounded-md.hover\\:bg-gray-200.flex.items-center.gap-2.transition-colors .w-4.h-4 {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+  }
+  
+  /* Hide filter text on mobile */
+  .sm\\:hidden.bg-gray-100.text-gray-700.px-3.py-2.rounded-md.hover\\:bg-gray-200.flex.items-center.gap-2.transition-colors::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+  }
+  
+  /* Mobile Add Button - Make touch-friendly */
+  .bg-primary-600.text-white.px-4.py-2.rounded-md.hover\\:bg-primary-700.flex.items-center.gap-2.transition-colors.whitespace-nowrap {
+    width: 2.75rem !important;
+    height: 2.75rem !important;
+    padding: 0 !important;
+    justify-content: center !important;
+  }
+  
+  .bg-primary-600.text-white.px-4.py-2.rounded-md.hover\\:bg-primary-700.flex.items-center.gap-2.transition-colors.whitespace-nowrap .w-4.h-4 {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+  }
+  
+  /* Hide add button text on mobile */
+  .bg-primary-600.text-white.px-4.py-2.rounded-md.hover\\:bg-primary-700.flex.items-center.gap-2.transition-colors.whitespace-nowrap .sm\\:hidden {
+    display: none !important;
+  }
+  
+  /* Mobile Card Grid - 2 cards per row */
+  .grid.grid-cols-1.sm\\:grid-cols-2.lg\\:grid-cols-3.xl\\:grid-cols-4.gap-4.sm\\:gap-6 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+  
+  /* Mobile Loading Skeleton Grid */
+  .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3.xl\\:grid-cols-4.gap-6 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+  
+  /* Mobile Card Equal Heights */
+  .bg-white.rounded-lg.shadow-sm.border.border-gray-200.hover\\:shadow-md.transition-shadow.group {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+  }
+  
+  .p-3.sm\\:p-4.pt-0 {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  .flex.items-center.justify-between.mb-4 {
+    margin-top: auto !important;
+  }
 } 
